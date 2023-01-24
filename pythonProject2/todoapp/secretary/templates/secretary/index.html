@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}::{{ block.super }}
+
+{% block sidebar %}
+
+{% include 'inc/_sidebar.html' %}
+
+{% endblock %}
+
+{% block content %}
+            {% for item in todo %}
+            <div class="card mb-3">
+                <div class="card-header">
+                    Исполнитель: <a href="{{ item.get_absolute_url }}">{{ item.executor }}</a>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ item.title }}</h5>
+                    {% comment %}
+                    <p class="card-text">{{ item.content }}</p>
+                    {% endcomment %}
+                    {% if item.is_complete == False %}
+                    <a class="badge text-bg-warning">Не выполнено</a>
+                    <a href="{{ item.update_url }}" class="btn btn-primary">Завершить</a>
+                    {% else %}
+                    <a class="badge text-bg-success">Завершено</a>
+                    <a href="{{ item.update_url }}" class="btn btn-primary">Начать</a>
+                    {% endif %}
+                    <a href="{{ item.delete_url }}" class="btn btn-secondary">Удалить</a>
+                </div>
+                <div class="card-footer text-muted">
+                    {{ item.period_of_execution|date:"d-m-Y" }}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+
+{% endblock %}
+
+
+
+

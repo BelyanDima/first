@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ executor.title }}
+{% endblock %}::{{ block.super }}
+
+{% block sidebar %}
+
+{% include 'inc/_sidebar.html' %}
+
+{% endblock %}
+
+{% block content %}
+            {% for item in todo %}
+            <div class="card mb-3">
+                <div class="card-header">
+                    Исполнитель: <a href="{% url 'executor' item.executor.pk %}">{{ item.executor }}</a>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ item.title }}</h5>
+                    <p class="card-text">{{ item.content }}</p>
+                    <a href="#" class="btn btn-primary">Выполнено</a>
+                </div>
+                <div class="card-footer text-muted">
+                    {{ item.created_at|date:"d-m-Y H:i:s" }}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+{% endblock %}
+

@@ -6,8 +6,6 @@ class Task:
         else:
             print(task.dig())
 
-
-
     def st(self):
         gl = ('а','у','о','ы','э','е','ё','и','ю','я')
         g = 0
@@ -36,6 +34,6 @@ class Task:
 
 
 task = Task()
-print(task.input())
+task.input()
 
 
