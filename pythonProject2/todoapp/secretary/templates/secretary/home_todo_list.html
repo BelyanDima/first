@@ -11,31 +11,26 @@
 {% endblock %}
 
 {% block content %}
-            {% for item in todo %}
-            <div class="card mb-3">
-                <div class="card-header">
-                    Исполнитель: <a href="{{ item.get_absolute_url }}">{{ item.executor }}</a>
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">{{ item.title }}</h5>
-                    {% comment %}
-                    <p class="card-text">{{ item.content }}</p>
-                    {% endcomment %}
-                    {% if item.is_complete == False %}
-                    <a class="badge text-bg-warning">Не выполнено</a>
-                    <a href="{% url 'update' todo_id=item.id %}" class="btn btn-primary">Завершить</a>
-                    {% else %}
-                    <a class="badge text-bg-success">Завершено</a>
-                    <a href="{% url 'update' todo_id=item.id %}" class="btn btn-light">Восстановить</a>
-                    {% endif %}
-                    <a href="{% url 'delete' todo_id=item.id %}" class="btn btn-secondary">Удалить</a>
-                </div>
-                <div class="card-footer text-muted">
-                    {{ item.period_of_execution|date:"d-m-Y" }}
-                </div>
-            </div>
-            {% endfor %}
-        </div>
+
+{% for item in todo %}
+<div class="card mb-3">
+    <div class="card-header">
+        Исполнитель: <a href="{{ item.get_absolute_url }}">{{ item.executor }}</a>
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">{{ item.title }}</h5>
+        {% if item.is_complete == False %}
+        <a class="badge text-bg-warning">Не выполнено</a>
+        <a href="{% url 'update' todo_id=item.id %}" class="btn btn-primary">Завершить</a>
+        {% else %}
+        <a class="badge text-bg-success">Завершено</a>
+        <a href="{% url 'update' todo_id=item.id %}" class="btn btn-light">Восстановить</a>
+        {% endif %}
+    </div>
+    <div class="badge rounded-pill text-bg-secondary">{{ item.period_of_execution|date:"d-m-Y" }}</div>
+    </div>
+{% endfor %}
+</div>
 
 
 {% endblock %}

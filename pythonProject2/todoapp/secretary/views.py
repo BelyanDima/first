@@ -1,10 +1,11 @@
+from datetime import date
+
 from django.contrib.auth import logout
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, CreateView
 from django.urls import reverse_lazy
 from .models import ToDo, Executor
 from .forms import ToDoForm, UserRegisterForm, UserLoginForm
-from .utils import Mymixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.contrib.auth import login
@@ -51,12 +52,12 @@ def user_logout(request):
     return redirect('login')
 
 
-class TodoList(Mymixin, ListView):
+class TodoList(ListView):
     model = ToDo
     template_name = 'secretary/home_todo_list.html'
     context_object_name = 'todo'
-    #extra_context = {'title': 'Главная'}
-    paginate_by = 5
+    # extra_context = {'title': 'Главная'}
+    paginate_by = 10
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs, is_complete=False)
@@ -67,11 +68,27 @@ class TodoList(Mymixin, ListView):
         return ToDo.objects.filter(is_complete=False).select_related('executor')
 
 
-class TodoExecutor(Mymixin, ListView):
+
+
+class TodoList_is_compete(ListView):
+    model = ToDo
+    template_name = 'secretary/is_complete_todo.html'
+    context_object_name = 'todo'
+    paginate_by = 10
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs, is_complete=True)
+        context['title'] = 'Завершённые задачи'
+        return context
+
+    def get_queryset(self):
+        return ToDo.objects.filter(is_complete=True).select_related('executor')
+
+
+class TodoExecutor(ListView):
     model = ToDo
     template_name = 'secretary/home_todo_list/html'
     context_object_name = 'todo'
-    allow_empty = False
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -99,3 +116,5 @@ def delete(request, todo_id):
     todo = ToDo.objects.get(id=todo_id)
     todo.delete()
     return redirect('home')
+
+

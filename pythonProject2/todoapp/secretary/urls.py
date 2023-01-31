@@ -10,5 +10,7 @@ urlpatterns = [
     path('executor/<int:executor_id>/', TodoExecutor.as_view(), name='executor'),
     path('update/<int:todo_id>/', views.update, name='update'),
     path('delete/<int:todo_id>/', views.delete, name='delete'),
-    path('secretary/add_todo/', CreateTodo.as_view(), name='add_todo')
+    path('secretary/add_todo/', CreateTodo.as_view(), name='add_todo'),
+    path('secretary/is_complete_todo/', TodoList_is_compete.as_view(), name='is_complete_todo'),
+
 ]

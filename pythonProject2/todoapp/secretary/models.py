@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.db import models
 from django.urls import reverse
 
@@ -11,6 +13,9 @@ class ToDo(models.Model):
     period_of_execution = models.DateField('Срок(дата) исполнения')
     is_complete = models.BooleanField('Исполнено', default=False)
 
+
+
+
     class Meta:
         verbose_name = 'Задача'
         verbose_name_plural = 'Задачи'
@@ -18,6 +23,7 @@ class ToDo(models.Model):
 
     def __str__(self):
         return self.title
+
 
 
 class Executor(models.Model):
